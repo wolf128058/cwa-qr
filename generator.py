@@ -19,6 +19,7 @@ ARG_PARSER.add_argument('-f', '--filename', help=r'filename to save the qrcode',
 ARG_PARSER.add_argument('-g', '--generate', help=r'generate a new seed', action='store_true')
 ARG_PARSER.add_argument('-j', '--jar', help=r'filename of seed-jar', type=str)
 ARG_PARSER.add_argument('-l', '--length', help=r'default checkin length (minutes)', type=int, default=60)
+ARG_PARSER.add_argument('-p', '--poster', help=r'generate a poster svg', action='store_true')
 ARG_PARSER.add_argument('-s', '--start', help=r'start event in x minutes', type=int, default=0)
 ARG_PARSER.add_argument('-t', '--type', help=r'type of location', type=int, default=0)
 ARG_PARSER.add_argument('-u', '--url', help=r'print the url', action='store_true')
@@ -61,8 +62,14 @@ if ARGS.filename:
     print('saving to: ' + ARGS.filename)
     extension = os.path.splitext(ARGS.filename)[1]
     if extension == '.png':
+        if ARGS.poster:
+            print('Sorry, no png-posters. Will save a qr-code for you anyway')
         img = qr.make_image(fill_color="black", back_color="white")
         img.save(ARGS.filename)
     elif extension == '.svg':
-        svg = qr.make_image(image_factory=qrcode.image.svg.SvgPathFillImage)
-        svg.save(ARGS.filename)
+        if ARGS.poster:
+            poster = cwa_qr.generate_poster(event_description, cwa_qr.CwaPoster.POSTER_PORTRAIT)
+            poster.save(ARGS.filename)
+        else:
+            svg = qr.make_image(image_factory=qrcode.image.svg.SvgPathFillImage)
+            svg.save(ARGS.filename)
