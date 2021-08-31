@@ -53,7 +53,7 @@ if ARGS.jar:
 # print url
 if ARGS.url:
     url = cwa_qr.generate_url(event_description)
-    print(url)
+    print(url, end = '')
 
 # Generate QR-Code
 qr = cwa_qr.generate_qr_code(event_description)
