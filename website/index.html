@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Corona Warn App - Checkin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <style>
+        body {
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            font-family: Roboto, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            overflow: hidden;
+        }
+
+        img {
+            margin: 10%;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .code {
+            background-image: url('img/frame.svg');
+            display: flex;
+            background-size: 100% 100%;
+            margin: 1rem;
+        }
+
+        .cta {
+            display: flex;
+        }
+
+        #time {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            text-align: right;
+        }
+
+        @media (orientation: landscape) {
+            body {
+                flex-direction: row;
+            }
+
+            .code {
+                width: 50vw;
+                height: 100vh;
+            }
+
+            .cta {
+                width: 50vw;
+                height: 100vh;
+                padding-right: 10%;
+            }
+
+            .code img {
+                height: auto;
+            }
+        }
+
+        @media (orientation: portrait) {
+            body {
+                flex-direction: column;
+            }
+
+            .code {
+                width: 100vw;
+                height: 50vh;
+                margin-top: 3.25rem;
+            }
+
+            .cta {
+                width: 100vw;
+                height: 50vh;
+            }
+
+            .code img {
+                height: auto;
+                margin: 5% auto;
+            }
+        }
+    </style>
+    <script>
+        function showtime() {
+            a = new Date();
+            b = a.getHours(); c = a.getMinutes(); d = a.getSeconds(); e = a.getDate(); f = a.getMonth() + 1; g = a.getFullYear();
+
+            if (b < 10) { b = '0' + b; }
+            if (c < 10) { c = '0' + c; }
+            if (d < 10) { d = '0' + d; }
+            if (e < 10) { e = '0' + e; }
+            if (f < 10) { f = '0' + f; }
+            zeit = e + '.' + f + '.' + g + ' ' + b + ':' + c + ':' + d;
+            document.getElementById('time').innerHTML = zeit;
+        }
+        window.setInterval("showtime()", 10);
+        setInterval(function () {
+            var myImageElement = document.getElementById('eventcode');
+            myImageElement.src = 'img/event.svg?ts=' + Math.floor(Date.now() / 1000);
+        }, 60000);
+    </script>
+</head>
+
+<body>
+    <div class="code">
+        <img src="img/event.svg" id="eventcode" alt="qr code of event" />
+    </div>
+    <div class="cta">
+        <img src="img/cta.svg" alt="logos and cta-text" />
+    </div>
+    <span id="time">TT.MM.JJJJ hh:mm:ss</span>
+
+</body>
+
+</html>
